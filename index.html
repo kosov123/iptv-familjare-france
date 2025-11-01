@@ -1,127 +1,240 @@
 <!doctype html>
-<html>
-<head>
-  <meta charset="utf-8"/>
-  <title>IPTV Familjare - Kanale Publike</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/><!DOCTYPE html>
 <html lang="sq">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>📡 IPTV Familjare</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IPTV Familjare — Panel Modern</title>
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #0b132b;
-      color: white;
-      text-align: center;
-      margin: 0;
-      padding: 0;
+    :root{
+      --bg:#0b1220; --card:#0f1724; --accent:#ff6b6b; --text:#e6eef6;
     }
-    h1 {
-      background: #1c2541;
-      padding: 20px;
-      margin: 0;
-      font-size: 24px;
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Inter,Arial,Helvetica,sans-serif;
+      background:linear-gradient(180deg,#071028 0%, #091428 100%);
+      color:var(--text);
     }
-    .container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      padding: 20px;
+    header{padding:18px 20px; display:flex; align-items:center; justify-content:space-between}
+    h1{margin:0; font-size:20px}
+    .sub{opacity:.8; font-size:13px}
+    .container{padding:16px; max-width:1200px; margin:0 auto}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+      gap:14px;
     }
-    .card {
-      background: #3a506b;
-      border-radius: 12px;
-      padding: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    .card{
+      background:var(--card); border-radius:10px; padding:10px;
+      box-shadow:0 6px 20px rgba(0,0,0,.6); cursor:pointer;
+      transition:transform .12s ease, box-shadow .12s;
+      display:flex; flex-direction:column; gap:8px;
+      min-height:150px;
     }
-    video {
-      width: 100%;
-      border-radius: 10px;
-      background: black;
+    .card:hover{transform:translateY(-6px); box-shadow:0 12px 30px rgba(0,0,0,.7)}
+    .logo{height:46px; width:100%; display:flex; align-items:center; gap:10px}
+    .logo img{height:40px; width:40px; border-radius:6px; object-fit:cover}
+    .title{font-weight:600; font-size:15px}
+    .meta{font-size:13px; opacity:.8}
+    .playbtn{
+      margin-top:auto; align-self:flex-end; padding:8px 12px; border-radius:8px;
+      background:linear-gradient(90deg,var(--accent),#ff8a5c); color:#08101a; font-weight:700;
+      border:none; cursor:pointer;
     }
-    h3 {
-      margin-top: 10px;
+
+    /* modal */
+    .modal{
+      position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+      background:linear-gradient(180deg, rgba(2,6,23,.6), rgba(2,6,23,.9));
+      z-index:9999; padding:20px;
+    }
+    .modal.open{display:flex}
+    .player{
+      width:100%; max-width:1100px; background:#071028; border-radius:12px; padding:12px;
+      box-shadow:0 20px 50px rgba(0,0,0,.7);
+    }
+    .player-top{display:flex; justify-content:space-between; align-items:center; gap:10px}
+    .player-top h2{margin:0; font-size:18px}
+    .close{background:transparent; color:var(--text); border:none; font-size:20px; cursor:pointer}
+    video, iframe {width:100%; height:520px; border-radius:8px; background:black}
+    .help{font-size:13px; color:#9fb2d7; margin-top:6px}
+
+    /* responsive */
+    @media (max-width:700px){
+      video, iframe {height:260px}
     }
   </style>
+
+  <!-- hls.js CDN për luajtje HLS (m3u8) brenda <video> -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body>
-  <h1>📺 IPTV Familjare – Kanale Live</h1>
 
-  <div class="container">
-    <div class="card">
-      <h3>🇫🇷 France 24 (Anglisht)</h3>
-      <video controls autoplay muted>
-        <source src="https://static.france24.com/live/F24_EN_HI_HLS/live_web.m3u8" type="application/x-mpegURL">
-      </video>
-    </div>
-
-    <div class="card">
-      <h3>🇦🇱 RTK 1 (Kosovë)</h3>
-      <video controls autoplay muted>
-        <source src="https://iptv-all.lanesh4d0w.repl.co/kosovo/rtk1" type="application/x-mpegURL">
-      </video>
-    </div>
-
-    <div class="card">
-      <h3>🇦🇱 RTSH 24 (Shqipëri)</h3>
-      <video controls autoplay muted>
-        <source src="https://stream.rtsh.al/rtsh_live/rtsh24/playlist.m3u8" type="application/x-mpegURL">
-      </video>
-    </div>
-
-    <div class="card">
-      <h3>🌍 Euronews Albania</h3>
-      <video controls autoplay muted>
-        <source src="https://tv-trtworld.live.trt.com.tr/master.m3u8" type="application/x-mpegURL">
-      </video>
-    </div>
+<header>
+  <div>
+    <h1>📺 IPTV Familjare</h1>
+    <div class="sub">Kanale: Shqip, Turqi, Sport, Lajme, Dokumentarë — klik për play</div>
   </div>
+  <div style="font-size:13px; opacity:.85">Version demo - përdor burime publike</div>
+</header>
+
+<div class="container">
+  <div class="grid" id="grid">
+    <!-- kartat do të ngarkohen me JS -->
+  </div>
+  <p style="color:#9fb2d7; margin-top:14px; font-size:13px">
+    Për të shtuar kanal: redakto listën `channels` në fund të file-it dhe vendos linkun e saktë (YouTube embed ose M3U8).
+  </p>
+</div>
+
+<!-- Modal player -->
+<div class="modal" id="modal">
+  <div class="player" role="dialog" aria-modal="true">
+    <div class="player-top">
+      <h2 id="playerTitle">Duke luajtur...</h2>
+      <div>
+        <button class="close" id="closeBtn">✕</button>
+      </div>
+    </div>
+
+    <div id="playerContainer" style="margin-top:10px">
+      <!-- këtu vendosim iframe ose video -->
+    </div>
+
+    <div class="help">Tip: Në TV hapni këtë faqe me browserin dhe zgjidhni kanal. Për kanale me M3U8 mund ta hapni direkt në player.</div>
+  </div>
+</div>
+
+<script>
+/*
+  Lista e kanaleve: për secilin objekt vendos:
+  { id, title, country, category, type, src, logoOptional }
+  type = "youtube" (embed URL e.g. "https://www.youtube.com/embed/XXXXXXXX")
+       = "hls"     (direct m3u8 URL e.g. "https://.../playlist.m3u8")
+*/
+const channels = [
+  // LAJME & NDËRKOMBËTARE (YouTube embeds rekomandohen për lëvizje të lehtë)
+  { id:1, title:'France 24 (EN)', country:'FR', category:'Lajme', type:'youtube', src:'https://www.youtube.com/embed/1s8Duj6t4eI' },
+  { id:2, title:'DW News', country:'DE', category:'Lajme', type:'youtube', src:'https://www.youtube.com/embed/pveaVb2skpA' },
+  { id:3, title:'Al Jazeera English', country:'INT', category:'Lajme', type:'youtube', src:'https://www.youtube.com/embed/7LR3wRQD0Rk' },
+
+  // SHQIP
+  { id:4, title:'RTK 1 (Kosovë)', country:'ALB', category:'Shqip', type:'youtube', src:'https://www.youtube.com/embed/HQ1KfKUPgR4' },
+  { id:5, title:'RTSH 24 (Shqipëri)', country:'ALB', category:'Shqip', type:'youtube', src:'https://www.youtube.com/embed/pVEuzr4yJ1A' },
+
+  // TURQI (për kanale TRT; shumë shpesh tek YouTube ka Live)
+  { id:6, title:'TRT World', country:'TR', category:'Turq', type:'youtube', src:'https://www.youtube.com/embed/J8x7tIh9lvk' },
+  // Nëse ke link M3U8 zëvendëso src dhe type:'hls'
+
+  // SPORT / EKSTREME (kanale publike / Red Bull TV)
+  { id:7, title:'Red Bull TV (sport/ekstreme)', country:'INT', category:'Sport', type:'youtube', src:'https://www.youtube.com/embed/f2k1w8o2g3M' },
+
+  // DOKUMENTAR / NASA
+  { id:8, title:'NASA Live', country:'INT', category:'Dokumentar', type:'youtube', src:'https://www.youtube.com/embed/21X5lGlDOfg' },
+
+  // FUTUR: shembuj HLS (placeholder). Zëvendëso me linke reale kur ke.
+  { id:9, title:'Shembull Kanal HLS (zëvendëso me M3U8)', country:'INT', category:'HLS', type:'hls', src:'REPLACE_WITH_M3U8_URL' },
+
+  // SHTO KANAL TURK / SHQIP / SPORT - vendos si më sipër
+  // më poshtë është vendi ku ti mund të shtosh sa të duash
+];
+
+// Funksion për ndërtim grid
+const grid = document.getElementById('grid');
+
+function buildCards(){
+  grid.innerHTML = '';
+  channels.forEach(ch => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="logo">
+        <img src="${ch.logo || 'https://via.placeholder.com/80x45?text=TV'}" alt="${ch.title}" />
+        <div style="flex:1; text-align:left;">
+          <div class="title">${ch.title}</div>
+          <div class="meta">${ch.country} • ${ch.category}</div>
+        </div>
+      </div>
+      <button class="playbtn" data-id="${ch.id}">LUAJ</button>
+    `;
+    grid.appendChild(card);
+  });
+
+  // add event listeners
+  document.querySelectorAll('.playbtn').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      const id = Number(e.currentTarget.dataset.id);
+      const channel = channels.find(c=>c.id===id);
+      if(channel) openPlayer(channel);
+    });
+  });
+}
+
+// Modal player logic
+const modal = document.getElementById('modal');
+const playerContainer = document.getElementById('playerContainer');
+const playerTitle = document.getElementById('playerTitle');
+const closeBtn = document.getElementById('closeBtn');
+
+closeBtn.addEventListener('click', closePlayer);
+modal.addEventListener('click', (e)=>{ if(e.target===modal) closePlayer(); });
+
+function openPlayer(channel){
+  playerTitle.textContent = channel.title;
+  playerContainer.innerHTML = ''; // clear previous
+
+  if(channel.type === 'youtube'){
+    const iframe = document.createElement('iframe');
+    iframe.src = channel.src + '?autoplay=1&rel=0';
+    iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+    iframe.setAttribute('allowfullscreen','');
+    playerContainer.appendChild(iframe);
+
+  } else if(channel.type === 'hls'){
+    // video element + hls.js
+    const video = document.createElement('video');
+    video.controls = true;
+    video.autoplay = true;
+    video.muted = false;
+    playerContainer.appendChild(video);
+
+    const hlsUrl = channel.src;
+    if(Hls.isSupported()){
+      const hls = new Hls();
+      hls.loadSource(hlsUrl);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function() {
+        video.play().catch(()=>{});
+      });
+    } else if(video.canPlayType('application/vnd.apple.mpegurl')){
+      video.src = hlsUrl;
+      video.addEventListener('loadedmetadata', function(){ video.play().catch(()=>{}); });
+    } else {
+      playerContainer.innerHTML = '<p style="color:#f7b7b7">Ky shfletues nuk e mbështet HLS. Përdor Chrome/Edge/Firefox me hls.js.</p>';
+    }
+  } else {
+    playerContainer.innerHTML = '<p style="color:#f7b7b7">Formati i kanalit i panjohur.</p>';
+  }
+
+  modal.classList.add('open');
+}
+
+function closePlayer(){
+  modal.classList.remove('open');
+  playerContainer.innerHTML = '';
+}
+
+// fill
+buildCards();
+
+/* --- Si të SHTOSH kanale tuaja:
+   1) Në listën 'channels' më sipër kopjo një objekt të ri:
+      { id: 21, title: 'Emri Kanali', country:'ALB', category:'Sport', type:'hls', src:'https://link-i-m3u8.m3u8' }
+      ose për YouTube:
+      { id: 22, title: 'Klan Kosova (YouTube)', country:'ALB', category:'Shqip', type:'youtube', src:'https://www.youtube.com/embed/VIDEO_ID' }
+   2) Ruaj file-in (Commit changes). Vercel do e përditësojë automatikisht.
+   3) Për m3u8, sigurohu që linku të jetë publik dhe i ligjshëm.
+*/
+</script>
 </body>
 </html>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      max-width: 1100px;
-      margin: auto;
-      background: #f7f7f7;
-    }
-    .channel {
-      margin-bottom: 30px;
-      background: white;
-      padding: 10px;
-      border-radius: 12px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-    iframe {
-      width: 100%;
-      height: 450px;
-      border: none;
-      border-radius: 12px;
-    }
-    h1 {
-      text-align: center;
-      font-size: 28px;
-      margin-bottom: 30px;
-    }
-    h3 {
-      margin-bottom: 10px;
-      color: #222;
-    }
-    .small {
-      text-align: center;
-      font-size: 13px;
-      color: #777;
-    }
-  </style>
-</head>
-<body>
-  <h1>📡 IPTV Familjare – Kanale Live Publike</h1>
-  <p class="small">Version testues për përdorim familjar dhe personal.</p>
-
-  <div class="channel">
-    <h3>France 24 (Anglisht)</h3>
-    <iframe src="https://www.youtube.com/embed/1s8Du
